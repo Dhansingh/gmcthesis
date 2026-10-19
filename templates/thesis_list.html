@@ -1,0 +1,947 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    Browse Theses | GMC Digital Thesis Repository
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =====================================================
+     PAGE HERO
+===================================================== -->
+
+<section class="browse-hero">
+
+    <div class="container">
+
+        <div class="browse-breadcrumb">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>
+                Browse Thesis
+            </span>
+
+        </div>
+
+
+        <div class="browse-hero-content">
+
+            <div>
+
+                <span class="section-label">
+
+                    <i class="bi bi-journal-bookmark-fill"></i>
+
+                    GMC RESEARCH REPOSITORY
+
+                </span>
+
+
+                <h1>
+
+                    Browse Academic Theses
+
+                </h1>
+
+
+                <p>
+
+                    Explore approved postgraduate research
+                    from Ghodaghodi Multiple Campus.
+
+                </p>
+
+            </div>
+
+
+            <div class="browse-hero-stat">
+
+                <strong>
+                    {{ total_results }}
+                </strong>
+
+                <span>
+                    Published Theses
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     BROWSE AREA
+===================================================== -->
+
+<section class="browse-section">
+
+    <div class="container">
+
+        <div class="browse-layout">
+
+
+            <!-- =================================================
+                 FILTER SIDEBAR
+            ================================================= -->
+
+            <aside class="filter-sidebar">
+
+                <div class="filter-header">
+
+                    <div>
+
+                        <span class="filter-label">
+
+                            <i class="bi bi-sliders"></i>
+
+                            FILTERS
+
+                        </span>
+
+                        <h3>
+                            Refine Research
+                        </h3>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'thesis_list' %}"
+                        class="clear-filter"
+                    >
+
+                        Clear
+
+                    </a>
+
+                </div>
+
+                <form method="GET" action="{% url 'thesis_list' %}">
+    <!-- =================================================
+         MAIN SEARCH
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Search Research
+        </label>
+
+        <div class="filter-search">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="text"
+                name="q"
+                value="{{ query }}"
+                placeholder="e.g. commercial bank profitability"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SEARCH IN
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Search In
+        </label>
+
+        <select
+            name="search_in"
+            class="filter-select"
+        >
+
+            <option
+                value="all"
+                {% if search_in == "all" %}
+                    selected
+                {% endif %}
+            >
+                All Fields
+            </option>
+
+            <option
+                value="title"
+                {% if search_in == "title" %}
+                    selected
+                {% endif %}
+            >
+                Thesis Title
+            </option>
+
+            <option
+                value="abstract"
+                {% if search_in == "abstract" %}
+                    selected
+                {% endif %}
+            >
+                Abstract
+            </option>
+
+            <option
+                value="author"
+                {% if search_in == "author" %}
+                    selected
+                {% endif %}
+            >
+                Author
+            </option>
+
+            <option
+                value="keyword"
+                {% if search_in == "keyword" %}
+                    selected
+                {% endif %}
+            >
+                Keywords
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================================
+         MATCH MODE
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Match Keywords
+        </label>
+
+        <div class="search-radio-group">
+
+            <label class="radio-option">
+
+                <input
+                    type="radio"
+                    name="match"
+                    value="all"
+                    {% if match_mode == "all" %}
+                        checked
+                    {% endif %}
+                >
+
+                <span>
+                    All words
+                </span>
+
+            </label>
+
+
+            <label class="radio-option">
+
+                <input
+                    type="radio"
+                    name="match"
+                    value="any"
+                    {% if match_mode == "any" %}
+                        checked
+                    {% endif %}
+                >
+
+                <span>
+                    Any word
+                </span>
+
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         AUTHOR
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Author
+        </label>
+
+        <input
+            type="text"
+            name="author"
+            value="{{ author }}"
+            class="advanced-input"
+            placeholder="Student name"
+        >
+
+    </div>
+
+
+    <!-- =================================================
+         KEYWORD
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Keyword
+        </label>
+
+        <input
+            type="text"
+            name="keyword"
+            value="{{ keyword }}"
+            class="advanced-input"
+            placeholder="e.g. inflation"
+        >
+
+    </div>
+
+
+    <!-- =================================================
+         PROGRAM
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Academic Program
+        </label>
+
+        <select
+            name="program"
+            class="filter-select"
+        >
+
+            <option value="">
+                All Programs
+            </option>
+
+
+            {% for program in programs %}
+
+                <option
+                    value="{{ program.code }}"
+                    {% if selected_program == program.code %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ program.code }}
+                    —
+                    {{ program.name }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================================
+         RESEARCH AREA
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Research Area
+        </label>
+
+        <select
+            name="area"
+            class="filter-select"
+        >
+
+            <option value="">
+                All Research Areas
+            </option>
+
+
+            {% for research_area in research_areas %}
+
+                <option
+                    value="{{ research_area.id }}"
+                    {% if selected_area == research_area.id|stringformat:"s" %}
+                        selected
+                    {% endif %}
+                >
+
+                    {{ research_area.name }}
+
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================================
+         YEAR RANGE
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Publication Year
+        </label>
+
+        <div class="year-range">
+
+            <input
+                type="number"
+                name="from_year"
+                value="{{ from_year }}"
+                placeholder="From"
+                class="advanced-input"
+            >
+
+            <span>
+                —
+            </span>
+
+            <input
+                type="number"
+                name="to_year"
+                value="{{ to_year }}"
+                placeholder="To"
+                class="advanced-input"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         SORT
+    ================================================= -->
+
+    <div class="filter-group">
+
+        <label>
+            Sort Results
+        </label>
+
+        <select
+            name="sort"
+            class="filter-select"
+        >
+
+            <option
+                value="newest"
+                {% if sort == "newest" %}
+                    selected
+                {% endif %}
+            >
+                Newest First
+            </option>
+
+            <option
+                value="oldest"
+                {% if sort == "oldest" %}
+                    selected
+                {% endif %}
+            >
+                Oldest First
+            </option>
+
+            <option
+                value="title"
+                {% if sort == "title" %}
+                    selected
+                {% endif %}
+            >
+                Title A–Z
+            </option>
+
+            <option
+                value="author"
+                {% if sort == "author" %}
+                    selected
+                {% endif %}
+            >
+                Author A–Z
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- =================================================
+         SEARCH BUTTON
+    ================================================= -->
+
+    <button
+        type="submit"
+        class="apply-filter-button"
+    >
+
+        <i class="bi bi-search"></i>
+
+        Search Repository
+
+    </button>
+
+
+</form>
+                </form>
+
+
+                <!-- REPOSITORY INFO -->
+
+                <div class="filter-info">
+
+                    <i class="bi bi-info-circle"></i>
+
+                    <div>
+
+                        <strong>
+                            GMC-DTR
+                        </strong>
+
+                        <p>
+
+                            Showing only officially approved
+                            research available in the repository.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =================================================
+                 RESULTS
+            ================================================= -->
+
+            <main class="browse-results">
+
+
+                <!-- RESULTS HEADER -->
+
+               <div class="results-header">
+
+        <div>
+
+            <h2>
+
+                {% if query %}
+
+                    Search results for
+
+                    <span>
+                        "{{ query }}"
+                    </span>
+
+                {% else %}
+
+                    All Published Theses
+
+                {% endif %}
+
+            </h2>
+
+
+            <p>
+
+                Found
+
+                <strong>
+                    {{ total_results }}
+                </strong>
+
+                research works
+
+            </p>
+
+
+            {% if query or author or keyword or selected_program or selected_area or from_year or to_year %}
+
+                <div class="search-summary">
+
+
+                    {% if query %}
+
+                        <span class="search-tag">
+
+                            <i class="bi bi-search"></i>
+
+                            {{ query }}
+
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if author %}
+
+                        <span class="search-tag">
+
+                            <i class="bi bi-person"></i>
+
+                            {{ author }}
+
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if keyword %}
+
+                        <span class="search-tag">
+
+                            <i class="bi bi-tags"></i>
+
+                            {{ keyword }}
+
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if selected_program %}
+
+                        <span class="search-tag">
+
+                            {{ selected_program }}
+
+                        </span>
+
+                    {% endif %}
+
+
+                    {% if from_year or to_year %}
+
+                        <span class="search-tag">
+
+                            {{ from_year|default:"Any" }}
+
+                            –
+
+                            {{ to_year|default:"Any" }}
+
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <div class="results-sort">
+
+            <i class="bi bi-sort-down"></i>
+
+            <span>
+
+                {% if sort == "title" %}
+
+                    Title A–Z
+
+                {% elif sort == "author" %}
+
+                    Author A–Z
+
+                {% elif sort == "oldest" %}
+
+                    Oldest first
+
+                {% else %}
+
+                    Newest first
+
+                {% endif %}
+
+            </span>
+
+        </div>
+
+        </div>
+
+
+                        <!-- =================================================
+                            THESIS CARDS
+                        ================================================= -->
+
+                        <div class="browse-thesis-grid">
+
+                            {% for thesis in theses %}
+
+                                <article class="browse-thesis-card">
+
+
+                                    <div class="browse-card-top">
+
+                                        <span class="browse-program">
+
+                                            {{ thesis.student.program.code }}
+
+                                        </span>
+
+
+                                        <span class="browse-year">
+
+                                            {{ thesis.publication_year }}
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="browse-card-content">
+
+
+                                        <h3>
+
+                                            {{ thesis.title }}
+
+                                        </h3>
+
+
+                                        {% if thesis.abstract %}
+
+                                            <p>
+
+                                                {{ thesis.abstract|truncatewords:35 }}
+
+                                            </p>
+
+                                        {% else %}
+
+                                            <p>
+
+                                                Postgraduate academic
+                                                research available in the
+                                                GMC Digital Thesis Repository.
+
+                                            </p>
+
+                                        {% endif %}
+
+
+                                        <div class="browse-author">
+
+                                            <div class="author-avatar">
+
+                                                <i class="bi bi-person-fill"></i>
+
+                                            </div>
+
+
+                                            <div>
+
+                                                <span>
+                                                    Researcher
+                                                </span>
+
+                                                <strong>
+                                                    {{ thesis.student.name }}
+                                                </strong>
+
+                                            </div>
+
+                                        </div>
+
+
+                                        <div class="browse-card-meta">
+
+
+                                            {% if thesis.research_area %}
+
+                                                <span>
+
+                                                    <i class="bi bi-diagram-3"></i>
+
+                                                    {{ thesis.research_area.name }}
+
+                                                </span>
+
+                                            {% endif %}
+
+
+                                            <span>
+
+                                                <i class="bi bi-check-circle-fill"></i>
+
+                                                Approved
+
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="browse-card-footer">
+
+                                        <span>
+
+                                            <i class="bi bi-file-earmark-text"></i>
+
+                                            Thesis
+
+                                        </span>
+
+
+                                        <a href="{% url 'thesis_detail' thesis.pk %}">
+
+                                            View Research
+
+                                            <i class="bi bi-arrow-right"></i>
+
+                                        </a>
+
+                                    </div>
+
+                                </article>
+
+                            {% empty %}
+
+
+                                <!-- EMPTY -->
+
+                                <div class="no-results">
+
+                                    <div class="no-results-icon">
+
+                                        <i class="bi bi-search"></i>
+
+                                    </div>
+
+
+                                    <h3>
+
+                                        No theses found
+
+                                    </h3>
+
+
+                                    <p>
+
+                                        We couldn't find any published
+                                        research matching your filters.
+
+                                    </p>
+
+
+                                    <a
+                                        href="{% url 'thesis_list' %}"
+                                    >
+
+                                        Clear All Filters
+
+                                    </a>
+
+                                </div>
+
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <!-- =================================================
+                            PAGINATION
+                        ================================================= -->
+
+                        {% if page_obj.has_other_pages %}
+
+                            <nav class="thesis-pagination">
+
+
+                                {% if page_obj.has_previous %}
+
+                                    <a
+                                        href="?{{ pagination_query }}&page={{ page_obj.previous_page_number }}"
+                                        class="pagination-button"
+                                    >
+
+                                        <i class="bi bi-chevron-left"></i>
+
+                                    </a>
+
+                                {% endif %}
+
+
+                                {% for page_number in page_obj.paginator.page_range %}
+
+                                    {% if page_number == page_obj.number %}
+
+                                        <span class="pagination-number active">
+
+                                            {{ page_number }}
+
+                                        </span>
+
+
+                                    {% elif page_number >= page_obj.number|add:"-2" and page_number <= page_obj.number|add:"2" %}
+
+                                        <a
+                                            href="?{{ pagination_query }}&page={{ page_number }}"
+                                            class="pagination-number"
+                                        >
+
+                                            {{ page_number }}
+
+                                        </a>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+
+                                {% if page_obj.has_next %}
+
+                                    <a
+                                        href="?{{ pagination_query }}&page={{ page_obj.next_page_number }}"
+                                        class="pagination-button"
+                                    >
+
+                                        <i class="bi bi-chevron-right"></i>
+
+                                    </a>
+
+                                {% endif %}
+
+
+                            </nav>
+
+                        {% endif %}
+
+                    </main>
+
+                </div>
+
+            </div>
+
+        </section>
+
+{% endblock %}

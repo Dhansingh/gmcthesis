@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Login | GMC Digital Thesis Repository
+{% endblock %}
+
+
+{% block content %}
+
+<section class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <div class="login-logo">
+
+                <i class="bi bi-mortarboard-fill"></i>
+
+            </div>
+
+
+            <div class="login-header">
+
+                <span>
+                    GMC DIGITAL THESIS REPOSITORY
+                </span>
+
+                <h1>
+                    Researcher Login
+                </h1>
+
+                <p>
+                    Login to access postgraduate
+                    research and thesis documents.
+                </p>
+
+            </div>
+
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="login-message">
+
+                        <i class="bi bi-exclamation-circle"></i>
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ request.GET.next }}"
+                >
+
+
+                <div class="login-field">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Enter your username"
+                            required
+                            autofocus
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-field">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-lock"></i>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-submit"
+                >
+
+                    <span>
+                        Login
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="login-footer">
+
+                <i class="bi bi-shield-check"></i>
+
+                Your account activity is recorded
+                for repository security.
+
+            </div>
+            <div class="register-existing">
+
+                    Don't have an account?
+
+                    <a href="{% url 'register' %}">
+                        Create an account
+                    </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

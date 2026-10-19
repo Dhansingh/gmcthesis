@@ -1,0 +1,808 @@
+{% extends "base.html" %}
+
+{% block title %}
+    GMC Digital Thesis Repository
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =====================================================
+     HERO SECTION
+===================================================== -->
+
+<section class="hero-section">
+
+    <div class="hero-background">
+
+        <div class="hero-glow hero-glow-one"></div>
+        <div class="hero-glow hero-glow-two"></div>
+
+        <div class="hero-grid"></div>
+
+    </div>
+
+
+    <div class="container hero-container">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+
+                <span class="hero-badge-dot"></span>
+
+                GMC DIGITAL THESIS REPOSITORY
+
+            </div>
+
+
+            <h1 class="hero-title">
+
+                Discover Research.
+                <span>Inspire Knowledge.</span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Explore postgraduate research and academic theses
+                from Ghodaghodi Multiple Campus — connecting
+                students, researchers and knowledge.
+
+            </p>
+
+
+            <!-- Search -->
+
+            <form class="hero-search"
+                  method="GET"
+                  action="#">
+
+                <div class="search-icon">
+
+                    <i class="bi bi-search"></i>
+
+                </div>
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="Search thesis, author, keyword or research area..."
+                    autocomplete="off"
+                >
+
+                <button type="submit">
+
+                    Search
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- Popular searches -->
+
+            <div class="popular-searches">
+
+                <span>Popular:</span>
+
+                <a href="#">Finance</a>
+                <a href="#">Management</a>
+                <a href="#">Education</a>
+                <a href="#">Sociology</a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Hero side visual -->
+
+        <div class="hero-visual">
+
+            <div class="research-orbit">
+
+                <div class="orbit-ring orbit-ring-one"></div>
+
+                <div class="orbit-ring orbit-ring-two"></div>
+
+                <div class="orbit-center">
+
+                    <i class="bi bi-mortarboard-fill"></i>
+
+                    <span>GMC</span>
+
+                </div>
+
+
+                <div class="orbit-card orbit-card-one">
+
+                    <i class="bi bi-journal-richtext"></i>
+
+                    <div>
+
+                        <strong>Research</strong>
+
+                        <small>Knowledge</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="orbit-card orbit-card-two">
+
+                    <i class="bi bi-search"></i>
+
+                    <div>
+
+                        <strong>Discover</strong>
+
+                        <small>Ideas</small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="orbit-card orbit-card-three">
+
+                    <i class="bi bi-lightbulb"></i>
+
+                    <div>
+
+                        <strong>Innovate</strong>
+
+                        <small>Future</small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STATISTICS
+===================================================== -->
+
+<section class="stats-section">
+
+    <div class="container">
+
+        <div class="stats-container">
+
+
+            <div class="stat-item">
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-journal-bookmark-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ thesis_count }}
+                    </strong>
+
+                    <span>
+                        Published Theses
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-divider"></div>
+
+
+            <div class="stat-item">
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-people-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ author_count }}
+                    </strong>
+
+                    <span>
+                        Researchers
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-divider"></div>
+
+
+            <div class="stat-item">
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-diagram-3-fill"></i>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        {{ research_area_count }}
+                    </strong>
+
+                    <span>
+                        Research Areas
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PROGRAMS
+===================================================== -->
+
+<section class="section programs-section">
+
+    <div class="container">
+
+        <div class="section-heading-row">
+
+            <div class="section-header">
+
+                <span class="section-label">
+
+                    <i class="bi bi-mortarboard"></i>
+
+                    Academic Programs
+
+                </span>
+
+                <h2 class="section-title">
+
+                    Explore Research by Program
+
+                </h2>
+
+                <p class="section-description">
+
+                    Browse postgraduate research conducted across
+                    different academic programs at GMC.
+
+                </p>
+
+            </div>
+
+
+            <a href="#" class="section-link">
+
+                View All
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <div class="program-grid">
+
+            {% for program in programs %}
+
+                <a href="#"
+                   class="program-card">
+
+                    <div class="program-card-top">
+
+                        <div class="program-icon">
+
+                            {% if "MBS" in program.name|upper %}
+
+                                <i class="bi bi-briefcase-fill"></i>
+
+                            {% elif "M.ED" in program.name|upper or "MED" in program.name|upper %}
+
+                                <i class="bi bi-book-fill"></i>
+
+                            {% else %}
+
+                                <i class="bi bi-journal-text"></i>
+
+                            {% endif %}
+
+                        </div>
+
+                        <i class="bi bi-arrow-up-right program-arrow"></i>
+
+                    </div>
+
+
+                    <div class="program-code">
+
+                        {{ program.code }}
+
+                    </div>
+
+
+                    <h3>
+
+                        {{ program.name }}
+
+                    </h3>
+
+
+                    <p>
+
+                        Explore research and theses
+                        from this academic program.
+
+                    </p>
+
+
+                    <div class="program-footer">
+
+                        <span>
+
+                            {{ program.students.count }}
+                            Researchers
+
+                        </span>
+
+                        <span>
+
+                            Explore
+                            <i class="bi bi-arrow-right"></i>
+
+                        </span>
+
+                    </div>
+
+                </a>
+
+            {% empty %}
+
+                <div class="empty-state">
+
+                    <i class="bi bi-mortarboard"></i>
+
+                    <h3>No programs available</h3>
+
+                    <p>
+                        Academic programs will appear here
+                        once added through the administration panel.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RECENT RESEARCH
+===================================================== -->
+
+<section class="section recent-section">
+
+    <div class="container">
+
+        <div class="section-heading-row">
+
+            <div class="section-header">
+
+                <span class="section-label">
+
+                    <i class="bi bi-clock-history"></i>
+
+                    Latest Research
+
+                </span>
+
+                <h2 class="section-title">
+
+                    Recently Published Theses
+
+                </h2>
+
+                <p class="section-description">
+
+                    Discover the latest approved postgraduate
+                    research available in the repository.
+
+                </p>
+
+            </div>
+
+
+            <a href="{% url 'thesis_list' %}" class="section-link">
+
+                Browse All
+
+                    <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <div class="thesis-grid">
+
+            {% for thesis in recent_theses %}
+
+                <article class="thesis-card">
+
+                    <div class="thesis-card-header">
+
+                        <span class="thesis-program">
+
+                            {{ thesis.student.program.code }}
+
+                        </span>
+
+                        <span class="thesis-year">
+
+                            {{ thesis.publication_year }}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="thesis-card-body">
+
+                        <h3>
+
+                            {{ thesis.title }}
+
+                        </h3>
+
+
+                        <p class="thesis-excerpt">
+
+                            {{ thesis.abstract|truncatewords:30 }}
+
+                        </p>
+
+
+                        <div class="thesis-meta">
+
+                            <div>
+
+                                <i class="bi bi-person"></i>
+
+                                {{ thesis.student.name }}
+
+                            </div>
+
+
+                            <div>
+
+                                <i class="bi bi-diagram-3"></i>
+
+                                {{ thesis.research_area.name }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="thesis-card-footer">
+
+                        <span>
+
+                            <i class="bi bi-shield-check"></i>
+
+                            Approved Research
+
+                        </span>
+
+                        <a href="#">
+
+                            View Thesis
+
+                            <i class="bi bi-arrow-right"></i>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <div class="empty-research">
+
+                    <div class="empty-research-icon">
+
+                        <i class="bi bi-journal-x"></i>
+
+                    </div>
+
+                    <h3>
+
+                        No published theses yet
+
+                    </h3>
+
+                    <p>
+
+                        Approved theses will automatically
+                        appear here.
+
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESEARCH AREAS
+===================================================== -->
+
+<section class="section research-area-section">
+
+    <div class="container">
+
+        <div class="research-area-wrapper">
+
+            <div class="research-area-heading">
+
+                <span class="section-label">
+
+                    <i class="bi bi-grid-3x3-gap-fill"></i>
+
+                    Knowledge Areas
+
+                </span>
+
+                <h2>
+
+                    Explore Research Areas
+
+                </h2>
+
+                <p>
+
+                    Find research by academic discipline
+                    and research interest.
+
+                </p>
+
+            </div>
+
+
+            <div class="research-area-list">
+
+                {% for area in research_areas %}
+
+                    <a href="#" class="research-area-tag">
+
+                        {{ area.name }}
+
+                        <i class="bi bi-arrow-up-right"></i>
+
+                    </a>
+
+                {% empty %}
+
+                    <span class="research-area-tag">
+                        Finance
+                    </span>
+
+                    <span class="research-area-tag">
+                        Management
+                    </span>
+
+                    <span class="research-area-tag">
+                        Education
+                    </span>
+
+                    <span class="research-area-tag">
+                        Sociology
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     AI SECTION
+===================================================== -->
+
+<section class="ai-section">
+
+    <div class="container">
+
+        <div class="ai-card">
+
+            <div class="ai-glow"></div>
+
+
+            <div class="ai-content">
+
+                <div class="ai-badge">
+
+                    <i class="bi bi-stars"></i>
+
+                    FUTURE OF RESEARCH
+
+                </div>
+
+
+                <h2>
+
+                    Your Research,
+                    <span>Powered by AI.</span>
+
+                </h2>
+
+
+                <p>
+
+                    Soon, GMC-DTR will help students discover
+                    related research, identify research gaps,
+                    explore keywords and find relevant theses
+                    using artificial intelligence.
+
+                </p>
+
+
+                <div class="ai-features">
+
+                    <span>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Semantic Search
+
+                    </span>
+
+                    <span>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Similar Research
+
+                    </span>
+
+                    <span>
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        Research Gap Discovery
+
+                    </span>
+
+                </div>
+
+
+                <button class="ai-button"
+                        type="button">
+
+                    <i class="bi bi-stars"></i>
+
+                    AI Research Assistant
+
+                    <span>
+                        Coming Soon
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <div class="ai-visual">
+
+                <div class="ai-circle">
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+
+                <div class="ai-ring ai-ring-one"></div>
+                <div class="ai-ring ai-ring-two"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CALL TO ACTION
+===================================================== -->
+
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-content">
+
+            <span class="section-label">
+
+                <i class="bi bi-book-half"></i>
+
+                Academic Knowledge
+
+            </span>
+
+            <h2>
+
+                Research today.
+                Inspire tomorrow.
+
+            </h2>
+
+            <p>
+
+                Explore the growing collection of postgraduate
+                research from Ghodaghodi Multiple Campus.
+
+            </p>
+
+
+            <a href="#" class="cta-button">
+
+                Explore Thesis Repository
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

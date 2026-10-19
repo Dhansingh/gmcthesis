@@ -1,0 +1,130 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="GMC Digital Thesis Repository - Academic research repository of Ghodaghodi Multiple Campus.">
+
+    <meta name="author"
+          content="Ghodaghodi Multiple Campus">
+
+    <title>{% block title %}GMC Digital Thesis Repository{% endblock %}</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    {% include "components/navbar.html" %}
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+
+    <!-- Footer -->
+    {% include "components/footer.html" %}
+
+
+    <!-- Back To Top -->
+    <button id="backToTop"
+            class="back-to-top"
+            aria-label="Back to top">
+
+        <i class="bi bi-arrow-up"></i>
+
+    </button>
+
+
+    <!-- Main JavaScript -->
+    <script>
+
+        // Navbar scroll effect
+        const navbar = document.querySelector(".site-navbar");
+
+        window.addEventListener("scroll", function () {
+
+            if (window.scrollY > 20) {
+                navbar.classList.add("navbar-scrolled");
+            } else {
+                navbar.classList.remove("navbar-scrolled");
+            }
+
+        });
+
+
+        // Back to top
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", function () {
+
+            if (window.scrollY > 400) {
+                backToTop.classList.add("show");
+            } else {
+                backToTop.classList.remove("show");
+            }
+
+        });
+
+        backToTop.addEventListener("click", function () {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+
+        // Mobile navigation
+        const menuToggle =
+            document.querySelector(".mobile-menu-toggle");
+
+        const mobileMenu =
+            document.querySelector(".mobile-menu");
+
+        if (menuToggle) {
+
+            menuToggle.addEventListener("click", function () {
+
+                mobileMenu.classList.toggle("active");
+
+                this.classList.toggle("active");
+
+            });
+
+        }
+
+    </script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+</html>
+

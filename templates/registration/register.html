@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Create Account | GMC Digital Thesis Repository
+{% endblock %}
+
+
+{% block content %}
+
+<section class="login-page">
+
+    <div class="login-container">
+
+        <div class="login-card register-card">
+
+            <div class="login-logo">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+            </div>
+
+
+            <div class="login-header">
+
+                <span>
+                    GMC DIGITAL THESIS REPOSITORY
+                </span>
+
+                <h1>
+                    Create Account
+                </h1>
+
+                <p>
+                    Register to access postgraduate
+                    research and thesis documents.
+                </p>
+
+            </div>
+
+
+            {% if messages %}
+
+                {% for message in messages %}
+
+                    <div class="login-message">
+
+                        <i class="bi bi-exclamation-circle"></i>
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endif %}
+
+
+            <form method="post">
+
+                {% csrf_token %}
+
+
+                <!-- First Name -->
+
+                <div class="login-field">
+
+                    <label>
+                        First Name
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            type="text"
+                            name="first_name"
+                            placeholder="Enter your first name"
+                            value="{{ request.POST.first_name }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Last Name -->
+
+                <div class="login-field">
+
+                    <label>
+                        Last Name
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-person"></i>
+
+                        <input
+                            type="text"
+                            name="last_name"
+                            placeholder="Enter your last name"
+                            value="{{ request.POST.last_name }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Username -->
+
+                <div class="login-field">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-at"></i>
+
+                        <input
+                            type="text"
+                            name="username"
+                            placeholder="Choose a username"
+                            value="{{ request.POST.username }}"
+                            required
+                        >
+
+                    </div>
+
+                    <small class="register-help">
+                        This will be your login ID.
+                    </small>
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="login-field">
+
+                    <label>
+                        Email Address
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-envelope"></i>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            value="{{ request.POST.email }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Password -->
+
+                <div class="login-field">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-lock"></i>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Minimum 8 characters"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Confirm Password -->
+
+                <div class="login-field">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+                    <div class="login-input">
+
+                        <i class="bi bi-shield-lock"></i>
+
+                        <input
+                            type="password"
+                            name="confirm_password"
+                            placeholder="Re-enter your password"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Submit -->
+
+                <button
+                    type="submit"
+                    class="login-submit"
+                >
+
+                    <span>
+                        Create Account
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </button>
+
+            </form>
+
+
+            <div class="register-existing">
+
+                Already have an account?
+
+                <a href="{% url 'login' %}">
+                    Login here
+                </a>
+
+            </div>
+
+
+            <div class="login-footer">
+
+                <i class="bi bi-shield-check"></i>
+
+                Your account activity is recorded
+                for repository security.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

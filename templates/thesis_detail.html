@@ -1,0 +1,1159 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    {{ thesis.title }} | GMC Digital Thesis Repository
+{% endblock %}
+
+
+{% block content %}
+
+<!-- =========================================================
+     THESIS HERO
+========================================================= -->
+
+<section class="thesis-detail-hero">
+
+    <div class="container">
+
+        <!-- Breadcrumb -->
+
+        <div class="detail-breadcrumb">
+
+            <a href="{% url 'home' %}">
+                Home
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <a href="{% url 'thesis_list' %}">
+                Browse Thesis
+            </a>
+
+            <i class="bi bi-chevron-right"></i>
+
+            <span>
+                Thesis Detail
+            </span>
+
+        </div>
+
+
+        <!-- Meta -->
+
+        <div class="detail-top-meta">
+
+            {% if thesis.student.program %}
+
+                <span class="detail-program">
+
+                    {{ thesis.student.program.code }}
+
+                </span>
+
+            {% endif %}
+
+
+            <span class="detail-status">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Approved Research
+
+            </span>
+
+
+            <span class="detail-year">
+
+                {{ thesis.publication_year }}
+
+            </span>
+
+        </div>
+
+
+        <!-- Title -->
+
+        <h1 class="thesis-detail-title">
+
+            {{ thesis.title }}
+
+        </h1>
+
+
+        <!-- Researcher -->
+
+        <div class="detail-author">
+
+            <div class="detail-author-avatar">
+
+                <i class="bi bi-person-fill"></i>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    RESEARCHER
+                </span>
+
+                <strong>
+                    {{ thesis.student.name }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<section class="thesis-detail-section">
+
+    <div class="container">
+
+        <div class="thesis-detail-layout">
+
+
+            <!-- =================================================
+                 MAIN ACADEMIC CONTENT
+            ================================================= -->
+
+            <main class="thesis-detail-main">
+
+
+                <!-- ABSTRACT -->
+
+                <article class="detail-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon">
+
+                            <i class="bi bi-file-text"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                RESEARCH SUMMARY
+                            </span>
+
+                            <h2>
+                                Abstract
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-text">
+
+                        {% if thesis.abstract %}
+
+                            {{ thesis.abstract|linebreaks }}
+
+                        {% else %}
+
+                            <p class="empty-detail">
+                                No abstract has been provided.
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     OBJECTIVES
+                ================================================= -->
+
+                {% if thesis.objectives %}
+
+                <article class="detail-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon">
+
+                            <i class="bi bi-bullseye"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                PURPOSE OF THE STUDY
+                            </span>
+
+                            <h2>
+                                Research Objectives
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-text">
+
+                        {{ thesis.objectives|linebreaks }}
+
+                    </div>
+
+                </article>
+
+                {% endif %}
+
+
+
+                <!-- =================================================
+                     METHODOLOGY
+                ================================================= -->
+
+                {% if thesis.methodology %}
+
+                <article class="detail-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon">
+
+                            <i class="bi bi-diagram-3"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                RESEARCH DESIGN
+                            </span>
+
+                            <h2>
+                                Methodology
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-text">
+
+                        {{ thesis.methodology|linebreaks }}
+
+                    </div>
+
+                </article>
+
+                {% endif %}
+
+
+
+                <!-- =================================================
+                     FINDINGS
+                ================================================= -->
+
+                {% if thesis.findings %}
+
+                <article class="detail-card findings-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon findings-icon">
+
+                            <i class="bi bi-bar-chart"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                STUDY RESULTS
+                            </span>
+
+                            <h2>
+                                Key Findings
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-text">
+
+                        {{ thesis.findings|linebreaks }}
+
+                    </div>
+
+                </article>
+
+                {% endif %}
+
+
+
+                <!-- =================================================
+                     CONCLUSION
+                ================================================= -->
+
+                {% if thesis.conclusion %}
+
+                <article class="detail-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon">
+
+                            <i class="bi bi-check2-circle"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                FINAL REMARKS
+                            </span>
+
+                            <h2>
+                                Conclusion
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="academic-text">
+
+                        {{ thesis.conclusion|linebreaks }}
+
+                    </div>
+
+                </article>
+
+                {% endif %}
+
+
+
+                <!-- =================================================
+                     KEYWORDS
+                ================================================= -->
+
+                <article class="detail-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon">
+
+                            <i class="bi bi-tags"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                INDEXING
+                            </span>
+
+                            <h2>
+                                Keywords
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="keyword-list">
+
+                        {% for keyword in thesis.keywords.all %}
+
+                            <span class="keyword-chip">
+
+                                <i class="bi bi-hash"></i>
+
+                                {{ keyword.name }}
+
+                            </span>
+
+                        {% empty %}
+
+                            <span class="empty-detail">
+
+                                No keywords available.
+
+                            </span>
+
+                        {% endfor %}
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     RESEARCH STATISTICS
+                ================================================= -->
+
+                <article class="detail-card statistics-card">
+
+                    <div class="detail-card-header">
+
+                        <div class="detail-section-icon">
+
+                            <i class="bi bi-graph-up-arrow"></i>
+
+                        </div>
+
+                        <div>
+
+                            <span>
+                                REPOSITORY ACTIVITY
+                            </span>
+
+                            <h2>
+                                Research Statistics
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="research-statistics-grid">
+
+
+                        <!-- Views -->
+
+                        <div class="research-stat-item">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-eye"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+
+                                    {{ thesis.view_count }}
+
+                                </strong>
+
+                                <span>
+                                    Views
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Downloads -->
+
+                        <div class="research-stat-item">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-download"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+
+                                    {{ thesis.download_count }}
+
+                                </strong>
+
+                                <span>
+                                    Downloads
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Pages -->
+
+                        <div class="research-stat-item">
+
+                            <div class="stat-icon">
+
+                                <i class="bi bi-file-earmark-text"></i>
+
+                            </div>
+
+                            <div>
+
+                                <strong>
+
+                                    {% if thesis.pages %}
+
+                                        {{ thesis.pages }}
+
+                                    {% else %}
+
+                                        —
+
+                                    {% endif %}
+
+                                </strong>
+
+                                <span>
+                                    Pages
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- =================================================
+                     PDF
+                ================================================= -->
+
+                <article class="detail-pdf-card">
+
+                    <div class="pdf-icon">
+
+                        <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                    </div>
+
+
+                    <div class="pdf-info">
+
+                        <span>
+                            FULL RESEARCH DOCUMENT
+                        </span>
+
+                        <h2>
+                            Thesis Document
+                        </h2>
+
+                        <p>
+                            Read or download the complete
+                            research document.
+                        </p>
+
+                    </div>
+
+
+                    <div class="pdf-actions">
+
+                        {% if thesis.thesis_file %}
+
+                            <a
+                                href="{% url 'read_thesis' thesis.pk %}"
+                                class="detail-pdf-button read-button"
+                                target="_blank"
+                            >
+
+                                <i class="bi bi-eye"></i>
+
+                                Read Thesis
+
+                            </a>
+
+
+                            <a
+                                href="{% url 'download_thesis' thesis.pk %}"
+                                class="detail-pdf-button download-button"
+                            >
+
+                                <i class="bi bi-download"></i>
+
+                                Download PDF
+
+                            </a>
+
+                        {% else %}
+
+                            <span class="pdf-not-available">
+
+                                <i class="bi bi-exclamation-circle"></i>
+
+                                PDF not available
+
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            </main>
+
+
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================= -->
+
+            <aside class="thesis-detail-sidebar">
+
+
+                <!-- =================================================
+                     QUICK INFORMATION
+                ================================================= -->
+
+                <div class="detail-sidebar-card">
+
+                    <div class="sidebar-card-title">
+
+                        <i class="bi bi-info-circle"></i>
+
+                        Quick Information
+
+                    </div>
+
+
+                    <div class="quick-info-list">
+
+
+                        <!-- Researcher -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-person"></i>
+
+                            <div>
+
+                                <span>
+                                    Researcher
+                                </span>
+
+                                <strong>
+                                    {{ thesis.student.name }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Registration -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-card-text"></i>
+
+                            <div>
+
+                                <span>
+                                    Registration Number
+                                </span>
+
+                                <strong>
+                                    {{ thesis.student.registration_number }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Program -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-mortarboard"></i>
+
+                            <div>
+
+                                <span>
+                                    Academic Program
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.student.program.code }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Department -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-building"></i>
+
+                            <div>
+
+                                <span>
+                                    Department
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.student.program.department.name }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Supervisor -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-person-workspace"></i>
+
+                            <div>
+
+                                <span>
+                                    Supervisor
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.supervisor.name }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Supervisor Designation -->
+
+                        {% if thesis.supervisor.designation %}
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-award"></i>
+
+                            <div>
+
+                                <span>
+                                    Supervisor Designation
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.supervisor.designation }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+
+
+                        <!-- Research Area -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-diagram-3"></i>
+
+                            <div>
+
+                                <span>
+                                    Research Area
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.research_area.name }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Year -->
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-calendar3"></i>
+
+                            <div>
+
+                                <span>
+                                    Publication Year
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.publication_year }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Pages -->
+
+                        {% if thesis.pages %}
+
+                        <div class="quick-info-item">
+
+                            <i class="bi bi-file-earmark-text"></i>
+
+                            <div>
+
+                                <span>
+                                    Number of Pages
+                                </span>
+
+                                <strong>
+
+                                    {{ thesis.pages }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CITATION
+                ================================================= -->
+
+                <div class="detail-sidebar-card">
+
+                    <div class="sidebar-card-title">
+
+                        <i class="bi bi-quote"></i>
+
+                        Cite This Research
+
+                    </div>
+
+
+                    <div
+                        class="citation-box"
+                        id="citationText"
+                    >
+
+                        {{ thesis.student.name }}.
+                        ({{ thesis.publication_year }}).
+                        {{ thesis.title }}.
+                        {{ thesis.student.program.name }}.
+                        Ghodaghodi Multiple Campus.
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="copy-citation-button"
+                        onclick="copyCitation()"
+                    >
+
+                        <i class="bi bi-copy"></i>
+
+                        Copy Citation
+
+                    </button>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SHARE
+                ================================================= -->
+
+                <div class="detail-sidebar-card">
+
+                    <div class="sidebar-card-title">
+
+                        <i class="bi bi-share"></i>
+
+                        Share Research
+
+                    </div>
+
+
+                    <div class="share-buttons">
+
+                        <button
+                            type="button"
+                            onclick="shareResearch()"
+                            class="share-button"
+                        >
+
+                            <i class="bi bi-share-fill"></i>
+
+                            Share
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            onclick="copyPageURL()"
+                            class="share-button secondary"
+                        >
+
+                            <i class="bi bi-link-45deg"></i>
+
+                            Copy Link
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </aside>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     RELATED RESEARCH
+========================================================= -->
+
+{% if related_theses %}
+
+<section class="related-thesis-section">
+
+    <div class="container">
+
+
+        <div class="related-section-header">
+
+            <div>
+
+                <span class="section-label">
+
+                    <i class="bi bi-diagram-3"></i>
+
+                    DISCOVER MORE
+
+                </span>
+
+                <h2>
+                    Related Research
+                </h2>
+
+                <p>
+                    Other research works that may be relevant
+                    to this study.
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'thesis_list' %}"
+                class="related-browse-link"
+            >
+
+                Browse All
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+
+        <div class="related-thesis-grid">
+
+            {% for related in related_theses %}
+
+                <article class="related-thesis-card">
+
+
+                    <div class="related-card-top">
+
+                        <span>
+
+                            {{ related.student.program.code }}
+
+                        </span>
+
+                        <small>
+
+                            {{ related.publication_year }}
+
+                        </small>
+
+                    </div>
+
+
+                    <h3>
+
+                        {{ related.title }}
+
+                    </h3>
+
+
+                    <p>
+
+                        {{ related.abstract|truncatewords:22 }}
+
+                    </p>
+
+
+                    <div class="related-card-author">
+
+                        <i class="bi bi-person-circle"></i>
+
+                        {{ related.student.name }}
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'thesis_detail' related.pk %}"
+                        class="related-view-link"
+                    >
+
+                        View Research
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+function copyCitation() {
+
+    const citationElement =
+        document.getElementById("citationText");
+
+    const citation =
+        citationElement.innerText.trim();
+
+    navigator.clipboard.writeText(citation)
+        .then(function () {
+
+            alert("Citation copied to clipboard.");
+
+        })
+        .catch(function () {
+
+            alert("Unable to copy citation.");
+
+        });
+
+}
+
+
+function copyPageURL() {
+
+    navigator.clipboard.writeText(
+        window.location.href
+    )
+    .then(function () {
+
+        alert("Research link copied.");
+
+    });
+
+}
+
+
+function shareResearch() {
+
+    if (navigator.share) {
+
+        navigator.share({
+
+            title:
+                "{{ thesis.title|escapejs }}",
+
+            text:
+                "GMC Digital Thesis Repository",
+
+            url:
+                window.location.href
+
+        });
+
+    } else {
+
+        copyPageURL();
+
+    }
+
+}
+
+</script>
+
+
+{% endblock %}
